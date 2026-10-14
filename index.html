@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Mango OS</title>
+
+<style>
+
+body{margin:0;background:#10150f;color:white;font-family:Arial,sans-serif}
+
+header{padding:22px;background:#1b241a;border-bottom:2px solid #a3ff68}
+
+h1,h2{color:#a3ff68}
+
+main{max-width:850px;margin:auto;padding:25px}
+
+.hero{text-align:center;padding:55px 10px}
+
+.card{background:#1b241a;border:1px solid #40513a;border-radius:14px;padding:20px;margin:15px 0}
+
+a,button{background:#a3ff68;color:#10150f;padding:12px 18px;border:0;border-radius:8px;font-weight:bold;text-decoration:none;cursor:pointer}
+
+input,textarea,select{box-sizing:border-box;width:100%;padding:12px;margin:6px 0;background:#10150f;color:white;border:1px solid #52644b;border-radius:8px}
+
+#messages{height:220px;overflow:auto}
+
+.msg{background:#293725;border-radius:8px;padding:10px;margin:8px 0;overflow-wrap:anywhere}
+
+small{color:#c1cdbb}
+
+</style>
+
+</head>
+
+<body>
+
+<header><strong>🥭 MANGO OS</strong></header>
+
+<main>
+
+<section class="hero">
+
+<h1>Meet Mango OS</h1>
+
+<p>A fresh vision for an operating system.</p>
+
+<a href="#team">Meet the Team</a>
+
+</section>
+
+<section class="card">
+
+<h2>Our Vision</h2>
+
+<p>Mango OS is a project focused on learning, creating, and building a new operating system.</p>
+
+</section>
+
+<section id="team">
+
+<h2>Our Team</h2>
+
+<div class="card"><strong>Nivaan</strong><p>Owner & Founder</p></div>
+
+<div class="card"><strong>Lennox</strong><p>Co-Founder</p></div>
+
+<div class="card"><strong>Johnny</strong><p>Co-Founder</p></div>
+
+<div class="card"><strong>Basim</strong><p>Team Member</p></div>
+
+</section>
+
+<section class="card">
+
+<h2>Team Portal 🥭</h2>
+
+<p>Send a message without signing in.</p>
+
+<select id="who">
+
+<option>Nivaan</option><option>Lennox</option>
+
+<option>Johnny</option><option>Basim</option><option>Guest</option>
+
+</select>
+
+<div id="messages"></div>
+
+<textarea id="msg" placeholder="Write a team message"></textarea>
+
+<button onclick="sendMessage()">Send Message</button>
+
+<p><small>Demo chat: messages are saved only in this browser, not shared with other devices.</small></p>
+
+</section>
+
+</main>
+
+<script>
+
+const key="mangoOSChat";
+
+const box=document.getElementById("messages");
+
+let messages=[];
+
+try{messages=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){}
+
+function draw(){
+
+box.replaceChildren();
+
+messages.forEach(m=>{
+
+const d=document.createElement("div");
+
+d.className="msg";
+
+const b=document.createElement("strong");
+
+b.textContent=m.name;
+
+const p=document.createElement("p");
+
+p.textContent=m.text;
+
+d.append(b,p);box.append(d);
+
+});
+
+box.scrollTop=box.scrollHeight;
+
+}
+
+function sendMessage(){
+
+const field=document.getElementById("msg");
+
+const text=field.value.trim();
+
+if(!text)return;
+
+messages.push({name:document.getElementById("who").value,text});
+
+messages=messages.slice(-100);
+
+try{localStorage.setItem(key,JSON.stringify(messages))}catch(e){}
+
+field.value="";draw();
+
+}
+
+draw();
+
+</script>
+
+</body>
+
+</html>￼￼
